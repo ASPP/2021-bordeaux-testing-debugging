@@ -83,9 +83,8 @@ def majority_vote(annotations):
 def labels_frequency(annotations, nclasses):
     """Compute the total frequency of labels in observed annotations.
 
-    Example:
-    >>> labels_frequency([[1, 1, 2], [-1, 1, 2]], 4)
-    array([ 0. ,  0.6,  0.4,  0. ])
+    Example:labels_frequency([[1, 1, 2], [-1, 1, 2]], 4)
+    >>> array([ 0. , 0.6,  0.4,  0. ])
 
     Arguments
     ---------
@@ -100,3 +99,22 @@ def labels_frequency(annotations, nclasses):
         freq[k] is the frequency of elements of class k in `annotations`, i.e.
         their count over the number of total of observed (non-missing) elements
     """
+    
+    annotations = np.asarray(annotations)
+    nitems = annotations.shape[0]
+    valid = annotations != MISSING_VALUE
+    
+    nobservations = valid.sum()
+
+    if nobservations == 0:
+        # no valid observations
+        raise PyannoError('No valid annotations')
+
+    return list(np.bincount(annotations[valid], minlength=nclasses)) / nobservations
+    
+    
+if __name__ == '__main__':
+	temp = labels_frequency([[1, 1, 2], [-1, 1, 2]], 4)
+	print(temp)
+    
+    
