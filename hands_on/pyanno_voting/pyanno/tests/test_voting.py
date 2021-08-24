@@ -41,3 +41,15 @@ def test_majority_vote_empty_item():
     expected = [1, MV, 2]
     result = voting.majority_vote(annotations)
     assert result == expected
+    
+from numpy.testing import assert_array_equal
+def test_frequency_vote():
+    annotations = [
+        [1, 1, 2],
+        [-1, 1, 2],
+    ]
+    classes=4
+    expected = [0, 0.6, 0.4,0]
+    result = voting.labels_frequency(annotations,classes)
+    assert_array_equal(result,expected)
+
