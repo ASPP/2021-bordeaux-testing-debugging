@@ -79,6 +79,7 @@ def majority_vote(annotations):
 
     return vote
 
+import pdb
 
 def labels_frequency(annotations, nclasses):
     """Compute the total frequency of labels in observed annotations.
@@ -100,3 +101,12 @@ def labels_frequency(annotations, nclasses):
         freq[k] is the frequency of elements of class k in `annotations`, i.e.
         their count over the number of total of observed (non-missing) elements
     """
+
+    ann_flat = np.array(annotations).flatten() 
+    ann_filtered = ann_flat[ann_flat != -1]
+    idx, val = np.unique(ann_filtered, return_counts=True)
+    res = np.zeros((nclasses,))
+    res[idx] = val
+    res /= len(ann_filtered)
+    return res
+    
