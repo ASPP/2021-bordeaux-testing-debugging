@@ -2,6 +2,7 @@ import numpy as np
 
 from pyanno import voting
 from pyanno.voting import MISSING_VALUE as MV
+from pyanno.voting import labels_frequency as labels_frequency
 
 
 def test_labels_count():
@@ -41,3 +42,12 @@ def test_majority_vote_empty_item():
     expected = [1, MV, 2]
     result = voting.majority_vote(annotations)
     assert result == expected
+
+def test_frequency(): 
+	sample = ([[1, 1, 2], [-1, 1, 2]])
+	expected = [0.0, 0.6, 0.4, 0.0 ]
+	result = labels_frequency(sample, 4)
+	
+	assert np.all(result == expected)
+
+	
